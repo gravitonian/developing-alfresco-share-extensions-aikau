@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>alfresco-war</artifactId>
+    <packaging>war</packaging>
+    <name>Alfresco Maven Test - Alfresco WAR</name>
+    <description>Standard Alfresco WAR with the Component A Repo JAR extension applied</description>
+
+    <!-- Setup the parent extension project, which contain all the Alfresco Maven SDK stuff -->
+    <parent>
+        <groupId>com.mycompany.alfresco</groupId>
+        <artifactId>alfresco-maven-test</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- Make sure the generated web application has the name alfresco.war -->
+    <properties>
+        <webapp.name>alfresco</webapp.name>
+    </properties>
+
+    <dependencies>
+        <!-- Include the complete Alfresco.war version that we are extending, so we can use it as a basis
+             for an overlay (i.e. we want to overlay our extensions on top of the standard Alfresco.war -->
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>${alfresco.repo.artifactId}</artifactId>
+            <version>${alfresco.version}</version>
+            <type>war</type>
+        </dependency>
+
+        <!-- Include all the Customizations for the Alfresco Repository WAR -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>component-a-repo-jar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- This is an example of how to include the Sharepoint Protocol Support (SPP),
+             you might need this extension if it was selected when you installed Alfresco stand-alone -->
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>alfresco-spp</artifactId>
+            <version>${alfresco.version}</version>
+            <type>amp</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${webapp.name}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <executions>
+                    <!-- Explode war so we can replace stuff in web.xml if run profile is enabled -->
+                    <execution>
+                        <id>prepare-war</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exploded</goal>
+                        </goals>
+                    </execution>
+                    <!-- Package alfresco.war with any changes and overlays -->
+                    <execution>
+                        <id>default-war</id>  <!-- Use default-war as id so we don't get duplicate packaging going on -->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>war</goal>
+                        </goals>
+                        <configuration>
+                            <overlays>
+                                <!-- Current project customizations from for example /src/main/webapp/WEB-INF.
+                                     This is normally empty, since customizations come from the JARs and the AMPs -->
+                                <overlay>
+                                    <!-- empty groupId/artifactId represents the current build -->
+                                </overlay>
+                                <!-- First the Original Alfresco WAR -->
+                                <overlay>
+                                    <groupId>${alfresco.groupId}</groupId>
+                                    <artifactId>${alfresco.repo.artifactId}</artifactId>
+                                    <type>war</type>
+                                    <!-- To allow inclusion of META-INF -->
+                                    <excludes>
+                                        <!-- web.xml has been updated after original alfresco.war was exploded so skip it -->
+                                        <exclude>WEB-INF/web.xml</exclude>
+                                    </excludes>
+                                </overlay>
+                                <!-- Then all AMPs -->
+                                <overlay>
+                                    <groupId>${alfresco.groupId}</groupId>
+                                    <artifactId>alfresco-spp</artifactId>
+                                    <type>amp</type>
+                                </overlay>
+                                <!-- Note that JAR dependencies are automatically added and does not
+                                     need to be specified here, unless you need them applied in a specific order -->
+                            </overlays>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>run</id>
+            <dependencies>
+                <!-- If we are running Tomcat embedded with the H2 database then bring in the
+                     Alfresco Rapid Application Development (RAD) JAR, which among other things have all
+                     the H2 Database dialect db scripts copied from the PostgreSQL scripts. -->
+                <dependency>
+                    <groupId>org.alfresco.maven</groupId>
+                    <artifactId>alfresco-rad</artifactId>
+                    <version>${maven.alfresco.version}</version>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <!-- Run the goal replace and update the web.xml where applicable,
+                         commenting out the security-constraints so we can run with
+                         HTTP when talking to Solr -->
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                        <executions>
+                            <execution>
+                                <id>comment-out-securecomms</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <regex>false</regex>
+                            <includes>
+                                <include>${project.basedir}/target/alfresco/WEB-INF/web.xml</include>
+                            </includes>
+                            <replacements>
+                                <replacement>
+                                    <token><![CDATA[<!-- Toggle securecomms placeholder start -->]]></token>
+                                    <value><![CDATA[<!--]]></value>
+                                </replacement>
+                                <replacement>
+                                    <token><![CDATA[<!-- Toggle securecomms placeholder end -->]]></token>
+                                    <value><![CDATA[-->]]></value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>enable-it</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.alfresco.maven</groupId>
+                    <artifactId>alfresco-rad</artifactId>
+                    <version>${maven.alfresco.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
