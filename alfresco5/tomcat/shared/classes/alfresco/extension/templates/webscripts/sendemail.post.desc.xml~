@@ -1,0 +1,19 @@
+<webscript>
+    <shortname>Sending Email</shortname>
+    <description>Sending Email Repo Web Script, POST body should include JSON such as: 
+	{ 
+	 "toAddress": "someone@dummy.com", 
+	 "subject": "Files for review", 
+	 "bodyText": "This is a bunch of files you should have a look at", 
+	 "nodeRefs": [ "{nodeRef1}",  "{nodeRef2}" ] 
+	}
+
+     POST example:
+	curl -v -u admin:admin -d @sample.json -H 'Content-Type:application/json' http://localhost:8080/alfresco/service/ecmstuff/sendemail
+    </description>
+    <family>ECM Stuff</family>
+    <url>/ecmstuff/sendemail</url>
+    <authentication>user</authentication>
+    <transaction>required</transaction>
+    <format default="html">any</format>
+</webscript>

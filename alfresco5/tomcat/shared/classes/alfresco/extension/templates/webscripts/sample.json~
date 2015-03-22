@@ -1,0 +1,6 @@
+{ 
+ "toAddress": "someone@dummy.com", 
+ "subject": "Files for review", 
+ "bodyText": "This is a bunch of files you should have a look at", 
+ "nodeRefs": [ "workspace://SpacesStore/b2e2549a-44b5-4142-900d-bd7dcee3a525",  "{nodeRef2}" ] 
+}

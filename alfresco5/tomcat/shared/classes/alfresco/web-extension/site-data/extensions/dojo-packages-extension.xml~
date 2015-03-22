@@ -1,0 +1,20 @@
+<extension>
+  <modules>
+    <module>
+      <id>ECM Stuff Tutorial Widget Dojo Packages</id>
+      <version>1.0</version>
+      <auto-deploy>true</auto-deploy>
+      <configurations>
+        <config evaluator="string-compare" condition="WebFramework" replace="false">
+          <web-framework>
+            <dojo-pages>
+              <packages>
+                <package name="ecmStuffServices" location="js/ecmstuff/services"/>
+              </packages>
+            </dojo-pages>
+          </web-framework>
+        </config>
+      </configurations>
+    </module>
+  </modules>
+</extension>

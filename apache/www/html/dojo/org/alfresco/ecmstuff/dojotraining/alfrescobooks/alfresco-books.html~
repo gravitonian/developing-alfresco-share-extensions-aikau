@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tutorial: Alfresco Books</title>
+    <link rel="stylesheet" href="widget/css/BookWidget.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.3/dojo/resources/dojo.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.3/dijit/themes/claro/claro.css">
+</head>
+<body>
+    <!-- HTML goes here -->
+    <h1>Alfresco Books</h1>
+    <div id="bookContainer">
+        <!-- Books go here -->
+    </div>
+    
+    <!-- Configure Dojo -->
+    <script>
+	var dojoConfig = {
+		async: true,
+		// This code registers the correct location of the "alfrescobooks"
+		// package so we can load Dojo from the CDN whilst still 
+		// being able to load local modules
+		packages: [{
+			name: "alfrescobooks",
+			location: location.pathname.replace(/\/[^/]*$/, '') + ''
+		}]
+	};	
+    </script>    
+    
+    <!-- Load Dojo AMD Loader -->
+    <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.10.3/dojo/dojo.js"></script>
+    <script>
+	require([
+		'dojo/request',
+		'dojo/dom',
+		'dojo/_base/array',
+		'alfrescobooks/widget/BookWidget'
+		], function(request, dom, arrayUtil, BookWidget) {
+			// Load our Alfresco Books
+			request("data/books.json", {
+				handleAs: "json"
+				}).then(function(books) {
+					// Get a reference to the book container div
+					var bookContainerDiv = dom.byId("bookContainer");
+			 
+					arrayUtil.forEach(books, function(book) {
+						// Create the Book widget and place it
+						var widget = new BookWidget(book).placeAt(bookContainerDiv);
+					});
+				  });
+		});
+	</script>        
+</body>
+</html>
+

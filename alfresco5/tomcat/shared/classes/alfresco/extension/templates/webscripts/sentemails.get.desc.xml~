@@ -1,0 +1,27 @@
+<webscript>
+    <shortname>Get sent enmails</shortname>
+    <description>Returns info about sent emails, info is stored in /Guest Home/sentemails.json, response is in JSON such as: 
+       [
+	{ 
+	 "toAddress": "someone@dummy.com", 
+	 "subject": "Files for review", 
+	 "bodyText": "This is a bunch of files you should have a look at", 
+	 "files": "fileA.doc,  fileB.txt"  
+	},
+	{ 
+	 "toAddress": "another@dummy.com", 
+	 "subject": "A file for review", 
+	 "bodyText": "This is a file you should have a look at", 
+	 "files": "fileA.doc"  
+	}
+      ]
+
+     GET example:
+	curl -v -u admin:admin http://localhost:8080/alfresco/service/ecmstuff/sentemails
+    </description>
+    <family>ECM Stuff</family>
+    <url>/ecmstuff/sentemails</url>
+    <authentication>user</authentication>
+    <transaction>required</transaction>
+    <format default="json">any</format>
+</webscript>

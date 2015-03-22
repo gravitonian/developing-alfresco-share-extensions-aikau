@@ -1,0 +1,6 @@
+<webscript>
+    <shortname>Hello World Aikau Page 3</shortname>
+    <description>Hello World Aikau page using a custom Hello World Widget</description>
+    <family>ECM Stuff</family>
+    <url>/ecmstuff/helloworld-page3</url>
+</webscript>

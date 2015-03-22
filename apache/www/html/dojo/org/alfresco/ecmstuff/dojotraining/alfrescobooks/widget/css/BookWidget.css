@@ -1,0 +1,31 @@
+/* 
+ * alfrescobooks/widget/css/BookWidget.css 
+ */
+
+.bookWidget {
+    border: 1px solid black;
+    width: 400px;
+    padding: 10px;
+    overflow: hidden; /* Clear floats inside */
+}
+ 
+.bookWidget h3 {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0px;
+}
+
+.bookWidget h4 {
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+    color: blue;
+    margin: 0px;
+}
+ 
+.bookWidgetCoverImage {
+    float: left;
+    margin: 4px 12px 6px 0px;
+    max-width: 75px;
+    max-height: 75px;
+}

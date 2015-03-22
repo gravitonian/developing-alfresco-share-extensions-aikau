@@ -1,0 +1,6 @@
+<webscript>
+    <shortname>Sending Email with File Links Aikau Page</shortname>
+    <description>Aikau page that can be used to select files from the repo and then send them as email attachment</description>
+    <family>ECM Stuff</family>
+    <url>/ecmstuff/sendemailwithfiles</url>
+</webscript>

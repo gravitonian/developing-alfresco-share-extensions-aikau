@@ -1,0 +1,92 @@
+var toggleLogoTopic = "TOGGLE_LOGO_TOPIC";
+var showAttributeName = "show";
+var showAttributeAlfrescoValue = "SHOW_ALFRESCO_LOGO";
+var showAttributeSurfValue = "SHOW_SURF_LOGO";
+
+var showAlfrescoLogoNextVisibilityConfig = {
+  initialValue: false,
+  rules: [
+    {
+      topic: toggleLogoTopic,
+      attribute: showAttributeName,
+      is: [showAttributeSurfValue],
+      isNot: [showAttributeAlfrescoValue]
+    }
+  ]
+};
+
+var showSurfLogoNextVisibilityConfig = {
+  initialValue: true,
+  rules: [
+    {
+      topic: toggleLogoTopic,
+      attribute: showAttributeName,
+      is: [showAttributeAlfrescoValue],
+      isNot: [showAttributeSurfValue]
+    }
+  ]
+};
+
+var showAlfrescoLogoLinkWidget = {
+  name: "alfresco/renderers/PropertyLink",
+  config: {
+    visibilityConfig: showAlfrescoLogoNextVisibilityConfig,
+    currentItem: {
+      label: "Show Alfresco Logo Instead"
+    },
+    propertyToRender: "label",
+    useCurrentItemAsPayload: false,
+    publishTopic: toggleLogoTopic,
+    publishPayloadType: "CONFIGURED",
+    publishPayload: {
+      show: showAttributeAlfrescoValue
+    }
+  }
+};
+
+var showSurfLogoLinkWidget = {
+  name: "alfresco/renderers/PropertyLink",
+  config: {
+    visibilityConfig: showSurfLogoNextVisibilityConfig,
+    currentItem: {
+      label: "Show Surf Logo Instead"
+    },
+    propertyToRender: "label",
+    useCurrentItemAsPayload: false,
+    publishTopic: toggleLogoTopic,
+    publishPayloadType: "CONFIGURED",
+    publishPayload: {
+      show: showAttributeSurfValue
+    }
+  }
+};
+
+var alfrescoLogoWidget = {
+  name: "alfresco/logo/Logo",
+  config: {
+    logoClasses: "alfresco-logo-only",
+    visibilityConfig: showSurfLogoNextVisibilityConfig
+  }
+};
+
+var surfLogoWidget = {
+  name: "alfresco/logo/Logo",
+  config: {
+    logoClasses: "surf-logo-large",
+    visibilityConfig: showAlfrescoLogoNextVisibilityConfig
+  }
+};
+
+
+model.jsonModel = {
+    widgets: [ 
+        {
+           id: "MY_HORIZONTAL_WIDGET_LAYOUT",
+           name: "alfresco/layout/HorizontalWidgets",
+           config: {
+               widgetWidth: 25,
+               widgets: [ alfrescoLogoWidget, showAlfrescoLogoLinkWidget, showSurfLogoLinkWidget, surfLogoWidget ]
+       }
+    }]
+};
+

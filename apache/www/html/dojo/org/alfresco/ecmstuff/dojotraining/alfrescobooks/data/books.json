@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Alfresco CMIS",
+        "author": "Martin Bergljung",
+        "coverImage": "https://d1ldz4te4covpm.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/3527OS_Alfresco%20CMIS_0.jpg",
+        "summary": "Learn how to build applications that talk to content management servers in a standardized way using this superb course on getting the best from Alfresco CMIS. This is a highly practical, step-by-step guide."
+    },
+    {
+        "title": "Alfresco Developer Guide",
+        "author": "Jeff Potts",
+        "coverImage": "https://www.packtpub.com/sites/default/files/bookimages/1847193110.jpg",
+        "summary": "Learn to customize the entire Alfresco platform, including both Document Management and Web Content Management. Jam-packed with real-world, step-by-step examples to jump start your development. Content modeling, custom actions, Java API, RESTful web scripts, advanced workflow. This book covers Alfresco Enterprise Edition version 2.2"
+    },
+    {
+        "title": "Alfresco 3 Business Solutions",
+        "author": "Martin Bergljung",
+        "coverImage": "https://www.packtpub.com/sites/default/files/3340OS_Alfresco%203%20Business%20Solutions_FrontCover.jpg",
+        "summary": "Deep practical insights into the vast possibilities that exist with the Alfresco platform for designing business solutions. Each and every type of business solution is implemented through the eyes of a fictitious financial organization - giving you the right amount of practical exposure you need. Packed with numerous case studies which will enable you to learn in various real world scenarios. Learn to use Alfresco's rich API arsenal with ease. Extend Alfresco's functionality and integrate it with external systems."
+    },
+    {
+        "title": "Alfresco 5",
+        "summary": "Deep dive into Alfresco 5"
+    }
+]
+
+
+

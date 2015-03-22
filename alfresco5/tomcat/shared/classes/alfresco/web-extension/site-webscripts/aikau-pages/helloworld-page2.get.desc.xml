@@ -1,0 +1,6 @@
+<webscript>
+    <shortname>Hello World Aikau Page 2</shortname>
+    <description>Hello World Aikau page using out of the box Widgets to create upload and association setup</description>
+    <family>ECM Stuff</family>
+    <url>/ecmstuff/helloworld-page2</url>
+</webscript>

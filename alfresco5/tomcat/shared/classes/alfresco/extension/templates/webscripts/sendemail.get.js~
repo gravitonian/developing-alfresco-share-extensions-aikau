@@ -1,0 +1,8 @@
+var toAddress = args.
+var subject = 
+
+var mail = actions.create("mail");
+mail.parameters.to = toAddress;
+mail.parameters.subject = subject;
+mail.parameters.ignore_send_failure = true;
+mail.execute(companyhome);
